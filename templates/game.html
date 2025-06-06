@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Guess Your Location</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f9f9f9;
+    }
+
+    h2 {
+      margin: 1rem;
+    }
+
+    #map {
+      width: 90%;
+      height: 75vh;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    #result {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2>Click on the map to guess the location!</h2>
+  <div id="map"></div>
+  <div id="result"></div>
+  <button onclick="window.location.href='/start'">Play Again</button>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
+  <script>
+    const map = L.map('map').setView([40.7128, -74.0060], 12); // Center on NYC
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    let guessMarker;
+
+    const actualLat = {{ actual_lat }};
+    const actualLon = {{ actual_lon }};
+
+    function submitGuess(lat, lon) {
+      fetch('/submit_guess', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lat: lat,
+          lon: lon,
+          actual_lat: actualLat,
+          actual_lon: actualLon
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `
+          <strong>Distance:</strong> ${data.distance_km} km<br>
+          <strong>Score:</strong> ${data.score} / 1000
+        `;
+
+        // Add actual location marker
+        L.marker([actualLat, actualLon], {icon: redIcon}).addTo(map)
+          .bindPopup("Actual Location").openPopup();
+      });
+    }
+
+    const redIcon = new L.Icon({
+      iconUrl: "https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png",
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -30]
+    });
+
+    map.on('click', function (e) {
+      if (guessMarker) map.removeLayer(guessMarker);
+
+      guessMarker = L.marker(e.latlng).addTo(map).bindPopup("Your Guess").openPopup();
+      submitGuess(e.latlng.lat, e.latlng.lng);
+    });
+  </script>
+</body>
+</html>
