@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess the Location</title>
+</head>
+<body>
+    <h2>Enter Your Guess</h2>
+    <p>Try to guess the latitude and longitude of a hidden NYC location.</p>
+    
+    <form method="POST" action="/submit_form_guess">
+        <label for="lat">Latitude:</label>
+        <input type="text" name="lat" required><br><br>
+
+        <label for="lon">Longitude:</label>
+        <input type="text" name="lon" required><br><br>
+
+        <!-- Hidden actual coordinates (they remain unknown to the player) -->
+        <input type="hidden" name="actual_lat" value="{{ actual_lat }}">
+        <input type="hidden" name="actual_lon" value="{{ actual_lon }}">
+
+        <button type="submit">Submit Guess</button>
+    </form>
+</body>
+</html>
