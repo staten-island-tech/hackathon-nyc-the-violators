@@ -1,68 +1,80 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, jsonify, render_template, request
+import requests
 import random
-import math
 
 app = Flask(__name__)
 
-# --- NYC Borough coordinate ranges (approximate bounding boxes) ---
-BOROUGH_COORDINATES = {
-    "Manhattan": {"lat": (40.700, 40.880), "lon": (-74.020, -73.930)},
-    "Brooklyn": {"lat": (40.570, 40.740), "lon": (-74.040, -73.850)},
-    "Queens": {"lat": (40.540, 40.800), "lon": (-73.960, -73.700)},
-    "Bronx": {"lat": (40.790, 40.910), "lon": (-73.930, -73.780)},
-    "Staten Island": {"lat": (40.480, 40.650), "lon": (-74.260, -74.050)},
-}
+# Load tree data once at startup from NYC Open Data API (limit to 1000 for performance)
+def load_trees():
+    print("Loading tree data...")
+    url = "https://data.cityofnewyork.us/resource/nwxe-4ae8.json?$limit=1000"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        trees = response.json()
+        print(f"Loaded {len(trees)} trees.")
+        return trees
+    except Exception as e:
+        print(f"Error loading tree data: {e}")
+        return []
 
-# Generate a random location within one of the five boroughs
-def generate_location():
-    borough = random.choice(list(BOROUGH_COORDINATES.keys()))
-    coords = BOROUGH_COORDINATES[borough]
-    lat = round(random.uniform(*coords["lat"]), 6)
-    lon = round(random.uniform(*coords["lon"]), 6)
-    return {"borough": borough, "latitude": lat, "longitude": lon}
+# Global variable holding tree dataset
+trees_data = load_trees()
 
-# Calculate distance using the Haversine formula (in kilometers)
-def calculate_distance(lat1, lon1, lat2, lon2):
-    R = 6371  # Earth's radius in km
-    dlat = math.radians(lat2 - lat1)
-    dlon = math.radians(lon2 - lon1)
-    a = math.sin(dlat / 2) ** 2 + math.cos(math.radians(lat1)) * \
-        math.cos(math.radians(lat2)) * math.sin(dlon / 2) ** 2
-    c = 2 * math.asin(math.sqrt(a))
-    return round(R * c, 2)
+def get_random_tree():
+    """Return a random tree with coordinates and image URL (using static map of tree location)."""
+    # Filter trees with valid lat/lon
+    valid_trees = [t for t in trees_data if 'latitude' in t and 'longitude' in t]
 
-# --- Flask Routes ---
+    if not valid_trees:
+        return None
 
-# Homepage: title, description, start button
+    tree = random.choice(valid_trees)
+
+    lat = tree.get('latitude')
+    lon = tree.get('longitude')
+    species = tree.get('spc_common', 'Unknown species')
+    borough = tree.get('boroname', 'Unknown borough')
+
+    # Generate a static map image URL using OpenStreetMap (via MapQuest Static Map)
+    # (You can replace with any free static map provider or custom image)
+    # For demo: use OpenStreetMap Static Map tile server (basic example)
+    zoom = 18
+    size = "400x300"
+    # We'll create a simple static OSM tile URL with a marker (using OpenStreetMap)
+    # Because OSM doesn't have a native static API, use a third party or generate custom
+    # For simplicity, just link to a normal tile URL (won't have marker) — replace if you want
+    static_map_url = f"https://static-maps.yandex.ru/1.x/?ll={lon},{lat}&size=400,300&z={zoom}&l=map&pt={lon},{lat},pm2rdm"
+
+    return {
+        "latitude": lat,
+        "longitude": lon,
+        "species": species,
+        "borough": borough,
+        "image_url": static_map_url
+    }
+
 @app.route("/")
-def home():
-    return render_template("home.html")
+def index():
+    """Serve the home page with a Start button."""
+    return render_template("index.html")
 
-# Start game: render map with random location as the hidden answer
-@app.route("/start")
-def start_game():
-    location = generate_location()
-    return render_template("game.html", actual_lat=location["latitude"], actual_lon=location["longitude"])
+@app.route("/game")
+def game():
+    """Serve the game page with a random tree location."""
+    tree = get_random_tree()
+    if tree is None:
+        return "No tree data available.", 500
+    return render_template("game.html", tree=tree)
 
-# Submit user guess: compare with actual location and return score
-@app.route("/submit_guess", methods=["POST"])
-def submit_guess():
-    data = request.json
-    guess_lat = data.get("lat")
-    guess_lon = data.get("lon")
-    actual_lat = data.get("actual_lat")
-    actual_lon = data.get("actual_lon")
+@app.route("/api/tree")
+def api_tree():
+    """API endpoint to get a new random tree."""
+    tree = get_random_tree()
+    if tree is None:
+        return jsonify({"error": "No tree data available"}), 500
+    return jsonify(tree)
 
-    # Error handling
-    if None in [guess_lat, guess_lon, actual_lat, actual_lon]:
-        return jsonify({"error": "Missing coordinates"}), 400
-
-    # Calculate score based on distance
-    distance = calculate_distance(guess_lat, guess_lon, actual_lat, actual_lon)
-    score = max(0, round(1000 - distance * 10))  # Simple scoring model
-
-    return jsonify({"distance_km": distance, "score": score})
-
-# Run the Flask app
 if __name__ == "__main__":
+    # Run Flask app
     app.run(debug=True)
