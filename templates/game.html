@@ -1,45 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guess the NYC Tree Location</title>
+  <meta charset="UTF-8">
+  <title>Guess the Tree Location</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: #f7f7f7; }
-    img { border-radius: 12px; max-width: 400px; }
-    button {
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 0.75rem;
-      border: none; background: #2196F3; color: white; cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover { background: #0b7dda; }
-    #map-container { margin-top: 1rem; }
+    #map { height: 500px; margin-top: 20px; }
+    body { font-family: sans-serif; text-align: center; padding: 20px; }
+    img.tree-image { width: 300px; margin-bottom: 10px; border-radius: 10px; }
+    #result { font-size: 1.2em; margin-top: 10px; color: green; }
   </style>
 </head>
 <body>
-  <h1>Guess the Tree Location</h1>
-  <p>Species: <strong>{{ tree.species }}</strong> — Borough: <strong>{{ tree.borough }}</strong></p>
-  <img id="tree-image" src="{{ tree.image_url }}" alt="Tree location static map" />
-  <br />
-  <button id="guess-btn">Guess Location</button>
+  <h2>Guess where this NYC tree is!</h2>
+  <img id="treeImage" class="tree-image" src="/static/tree_placeholder.png" alt="Tree Image">
+  <p><strong>Species:</strong> <span id="species"></span></p>
+  <div id="map"></div>
+  <p id="result"></p>
 
-  <div id="map-container" style="display:none;">
-    <!-- Here you can embed a map with Leaflet or Google Maps for guessing -->
-    <p>Map guessing interface coming soon!</p>
-    <p>Latitude: {{ tree.latitude }}, Longitude: {{ tree.longitude }}</p>
-  </div>
-
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    const guessBtn = document.getElementById('guess-btn');
-    const image = document.getElementById('tree-image');
-    const mapContainer = document.getElementById('map-container');
+    let map;
+    let guessMarker;
+    let actualLat = null;
+    let actualLon = null;
 
-    guessBtn.onclick = () => {
-      image.style.display = 'none';
-      mapContainer.style.display = 'block';
-      guessBtn.style.display = 'none';
+    async function initGame() {
+      // Load tree data
+      const response = await fetch('/api/tree');
+      const data = await response.json();
+
+      document.getElementById('treeImage').src = data.image_url;
+      document.getElementById('species').textContent = data.species;
+
+      actualLat = data.latitude;
+      actualLon = data.longitude;
+
+      // Initialize map after tree data is ready
+      map = L.map('map').setView([40.7128, -74.0060], 11); // NYC view
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      map.on('click', async function(e) {
+        const lat = e.latlng.lat;
+        const lon = e.latlng.lng;
+
+        if (guessMarker) map.removeLayer(guessMarker);
+        guessMarker = L.marker([lat, lon]).addTo(map);
+
+        // Send guess to server
+        const res = await fetch('/api/distance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lat: lat,
+            lon: lon,
+            lat_actual: actualLat,
+            lon_actual: actualLon
+          })
+        });
+
+        const result = await res.json();
+        if (result.distance_km !== undefined) {
+          document.getElementById('result').innerHTML =
+            `Your guess was <strong>${result.distance_km.toFixed(2)} km</strong> away!`;
+        } else {
+          document.getElementById('result').innerText = "Error calculating distance.";
+        }
+      });
     }
+
+    initGame();
   </script>
 </body>
 </html>

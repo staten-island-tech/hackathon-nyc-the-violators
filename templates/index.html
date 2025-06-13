@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NYC Geoguessr</title>
+  <meta charset="UTF-8">
+  <title>NYC GeoGuessr</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: #f7f7f7; }
-    h1 { font-weight: 700; }
-    button {
-      padding: 1rem 2rem; font-size: 1.25rem; border-radius: 1rem; border: none;
-      background: #4CAF50; color: white; cursor: pointer;
-      transition: background 0.3s;
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 100px;
     }
-    button:hover { background: #45a049; }
-    p { color: #555; margin-top: 0.5rem; }
+    a.play-button {
+      font-size: 24px;
+      padding: 10px 30px;
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
-  <h1>NYC Geoguessr</h1>
-  <p>Guess the location of a randomly selected NYC tree on the map!</p>
-  <button onclick="window.location.href='/game'">Start</button>
+  <h1>Welcome to NYC GeoGuessr: Tree Edition</h1>
+  <a href="/game" class="play-button">Play</a>
 </body>
 </html>
