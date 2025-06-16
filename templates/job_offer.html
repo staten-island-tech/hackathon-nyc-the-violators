@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Job Offer</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    padding: 30px;
+    max-width: 400px;
+    text-align: center;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+  }
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button.accept {
+    background-color: #28a745;
+    color: white;
+  }
+  button.accept:hover {
+    background-color: #218838;
+  }
+  button.decline {
+    background-color: #dc3545;
+    color: white;
+  }
+  button.decline:hover {
+    background-color: #c82333;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Job Opportunity!</h1>
+    <p><strong>Title:</strong> {{ job.title }}</p>
+    <p><strong>Pay:</strong> ${{ job.pay }} per week</p>
+    <p><strong>Hours per Week:</strong> {{ job.hours }}</p>
+    <p><strong>Happiness Impact:</strong> {{ job.happiness }}</p>
+    <p>Your current balance: ${{ balance }}</p>
+    <form method="POST" action="{{ url_for('accept_job') }}">
+      <div class="buttons">
+        <button class="accept" name="decision" value="accept" type="submit">Accept Offer</button>
+        <button class="decline" name="decision" value="decline" type="submit">Decline</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

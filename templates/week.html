@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Week {{ week }} - NYC Life Simulator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7faff;
+      margin: 0; padding: 20px 10px;
+      color: #2d3436;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    main {
+      max-width: 800px;
+      width: 100%;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+      padding: 30px 40px 50px;
+      box-sizing: border-box;
+    }
+    header {
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    h1 {
+      font-weight: 700;
+      font-size: 1.9rem;
+      color: #0984e3;
+      margin: 0;
+    }
+    .stats {
+      display: flex;
+      gap: 15px;
+    }
+    .card {
+      padding: 12px 20px;
+      border-radius: 12px;
+      min-width: 110px;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      user-select: none;
+    }
+    .balance {
+      background: #dff9fb;
+      color: #22a6b3;
+    }
+    .happiness {
+      background: #eafaf1;
+      color: #27ae60;
+    }
+    .hunger {
+      background: #fff5f5;
+      color: #eb2f06;
+    }
+    .section {
+      margin-top: 25px;
+    }
+    .event-desc {
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+      font-weight: 600;
+      color: #353b48;
+    }
+    form.decision-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 35px;
+    }
+    button.choice-btn {
+      background: #0984e3;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 700;
+      padding: 12px 0;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    button.choice-btn:hover {
+      background: #74b9ff;
+    }
+    /* Log box */
+    .log-container {
+      max-height: 170px;
+      overflow-y: auto;
+      border: 1.5px solid #dcdde1;
+      border-radius: 8px;
+      padding: 15px 20px;
+      font-size: 0.95rem;
+      color: #636e72;
+      background: #f1f2f6;
+      line-height: 1.4;
+      font-family: monospace;
+      white-space: pre-wrap;
+      user-select: none;
+    }
+    /* Job offer card */
+    .job-offer {
+      border: 2px solid #0984e3;
+      border-radius: 12px;
+      padding: 20px 25px;
+      margin-bottom: 30px;
+      background: #dff9fb;
+    }
+    .job-offer h2 {
+      margin-top: 0;
+      color: #0984e3;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .job-offer p {
+      margin: 8px 0 15px 0;
+      font-weight: 600;
+      color: #22a6b3;
+    }
+    .job-offer form {
+      display: flex;
+      gap: 10px;
+    }
+    .job-offer button {
+      flex: 1;
+      padding: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .accept-btn {
+      background-color: #27ae60;
+      color: white;
+    }
+    .accept-btn:hover {
+      background-color: #55efc4;
+      color: #2d3436;
+    }
+    .decline-btn {
+      background-color: #d63031;
+      color: white;
+    }
+    .decline-btn:hover {
+      background-color: #ff7675;
+      color: #2d3436;
+    }
+    /* Home & job info */
+    .info-cards {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .info-card {
+      background: #f1f2f6;
+      border-radius: 12px;
+      flex: 1 1 45%;
+      padding: 15px 20px;
+      box-sizing: border-box;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      font-weight: 600;
+      color: #2f3640;
+    }
+    .info-card h3 {
+      margin: 0 0 8px 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #0984e3;
+    }
+    .info-card p {
+      margin: 2px 0;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Week {{ week }}</h1>
+      <div class="stats">
+        <div class="card balance">Balance: ${{ balance }}</div>
+        <div class="card happiness">Happiness: {{ happiness }}</div>
+        <div class="card hunger">Hunger: {{ hunger }}</div>
+      </div>
+    </header>
+
+    <div class="info-cards">
+      <div class="info-card">
+        <h3>Home</h3>
+        <p><strong>{{ home.type }}</strong></p>
+        <p>{{ home.borough }}</p>
+        <p>Monthly Rent: ${{ home.rent }}</p>
+      </div>
+      <div class="info-card">
+        <h3>Job</h3>
+        <p><strong>{{ job.title }}</strong></p>
+        <p>Weekly Pay: ${{ job.pay }}</p>
+        <p>Hours/Week: {{ job.hours }}</p>
+        <p>Effect on Happiness: {{ job.happiness }}</p>
+      </div>
+    </div>
+
+    {% if job_offer_available %}
+  <div class="card job-offer-card">
+    <h3>New Job Opportunity!</h3>
+    <form method="POST" action="{{ url_for('accept_job') }}">
+      {% for job in job_offers %}
+        <div class="job-offer">
+          <strong>{{ job.title }}</strong> — ${{ job.pay }} / week, {{ job.hours }} hrs, Happiness: {{ job.happiness }}
+          <button type="submit" name="job_index" value="{{ loop.index0 }}">Accept</button>
+        </div>
+      {% endfor %}
+    </form>
+    <form method="POST" action="{{ url_for('decline_job') }}">
+      <button type="submit" class="decline-button">Decline</button>
+    </form>
+  </div>
+{% endif %}
+
+
+    <section class="section">
+      <div class="event-desc">{{ event.description }}</div>
+
+      <form action="{{ url_for('make_decision') }}" method="post" class="decision-form">
+        {% for choice in event.choices %}
+          <button type="submit" name="choice" value="{{ choice }}" class="choice-btn">
+            {{ choice.title() }}
+          </button>
+        {% endfor %}
+      </form>
+    </section>
+
+    <section>
+      <h3>Event Log</h3>
+      <div class="log-container">
+        {% if log %}
+          {% for entry in log %}
+            {{ entry }}<br/>
+          {% endfor %}
+        {% else %}
+          No events logged yet.
+        {% endif %}
+      </div>
+    </section>
+  </main>
+</body>
+</html>

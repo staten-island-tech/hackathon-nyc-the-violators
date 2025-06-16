@@ -1,0 +1,412 @@
+[
+  {
+    "description": "You get an offer to move into a cheaper, smaller basement apartment.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": -300, "happiness": -15, "hunger": 0, "rent_multiplier": 0.85},
+      "decline": {"money": 0, "happiness": 2, "hunger": 0}
+    }
+  },
+  {
+    "description": "Your neighbor offers to split groceries if you shop together.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": -30, "hunger": -20, "happiness": 2},
+      "decline": {"money": 0, "hunger": 0, "happiness": -5}
+    }
+  },
+  {
+    "description": "A co-worker invites you out for dinner. It’s not cheap.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": -40, "hunger": -30, "happiness": 5},
+      "decline": {"money": 0, "hunger": 10, "happiness": -25}
+    }
+  },
+  {
+    "description": "Your landlord offers to lower rent if you help clean the building weekly.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": 0, "happiness": -15, "rent_multiplier": 0.9},
+      "decline": {"money": 0, "happiness": -5}
+    }
+  },
+  {
+    "description": "You’re offered a freelance gig that pays $75 but takes up your weekend.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": 75, "happiness": -10, "hunger": 5},
+      "decline": {"money": 0, "happiness": 2, "hunger": 0}
+    }
+  },
+  {
+    "description": "The corner store is running a 2-for-1 deal on frozen meals.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": -10, "hunger": -20, "happiness": 5},
+      "decline": {"money": 0, "hunger": 0, "happiness": 0}
+    }
+  },
+  {
+    "description": "You find a roommate to split the rent with.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": -100, "happiness": -15, "rent_multiplier": 0.8},
+      "decline": {"money": 0, "happiness": 0}
+    }
+  },
+  {
+    "description": "You’re invited to speak on a panel. You’ll earn $100, but skip dinner.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": 100, "hunger": 15, "happiness": 4},
+      "decline": {"money": 0, "hunger": 0, "happiness": -15}
+    }
+  },
+  {
+    "description": "You can take on extra shifts at work this week.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": 150, "happiness": -15, "hunger": 10},
+      "decline": {"money": 0, "happiness": 2, "hunger": 0}
+    }
+  },
+  {
+    "description": "You’re tempted to order takeout after a long day.",
+    "choices": ["accept", "decline"],
+    "effects": {
+      "accept": {"money": -25, "hunger": -20, "happiness": 5},
+      "decline": {"money": 0, "hunger": 10, "happiness": -15}
+    }
+  },
+    {
+      "description": "Your heating breaks down, and repairs cost $150.",
+      "choices": ["pay", "wait"],
+      "effects": {
+        "pay": {"money": -150, "happiness": 2, "hunger": 0},
+        "wait": {"money": 0, "happiness": -20, "hunger": 5}
+      }
+    },
+    {
+      "description": "A local charity offers free meals if you volunteer 4 hours.",
+      "choices": ["volunteer", "skip"],
+      "effects": {
+        "volunteer": {"money": 0, "hunger": -30, "happiness": 3},
+        "skip": {"money": 0, "hunger": 10, "happiness": -10}
+      }
+    },
+    {
+      "description": "You find a coupon for discounted public transport.",
+      "choices": ["use", "ignore"],
+      "effects": {
+        "use": {"money": -20, "happiness": 2, "hunger": 0},
+        "ignore": {"money": 0, "happiness": -1, "hunger": 0}
+      }
+    },
+    {
+      "description": "Your bike needs a repair that costs $40.",
+      "choices": ["repair", "delay"],
+      "effects": {
+        "repair": {"money": -40, "happiness": 2, "hunger": 0},
+        "delay": {"money": 0, "happiness": -8, "hunger": 0}
+      }
+    },
+    {
+      "description": "A friend invites you to a free concert in the park.",
+      "choices": ["go", "decline"],
+      "effects": {
+        "go": {"money": 0, "happiness": 5, "hunger": 5},
+        "stay_in": {"money": 0, "happiness": -5, "hunger": 0}
+      }
+    },
+    {
+      "description": "You find a part-time job with flexible hours.",
+      "choices": ["apply", "ignore"],
+      "effects": {
+        "apply": {"money": 100, "happiness": -2, "hunger": 5},
+        "ignore": {"money": 0, "happiness": 1, "hunger": 0}
+      }
+    },
+    {
+      "description": "A sale on bulk canned goods could save you money upfront.",
+      "choices": ["buy", "skip"],
+      "effects": {
+        "buy": {"money": -50, "hunger": -40, "happiness": 1},
+        "skip": {"money": 0, "hunger": 10, "happiness": 0}
+      }
+    },
+    {
+      "description": "You are offered a loan to pay rent but must pay back $50 interest.",
+      "choices": ["take_loan", "decline"],
+      "effects": {
+        "take_loan": {"money": 1200, "happiness": -10, "hunger": 0},
+        "decline": {"money": 0, "happiness": 2, "hunger": 0}
+      }
+    },
+    {
+      "description": "A cold snap means higher heating bills this month.",
+      "choices": ["pay_extra", "try_to_save"],
+      "effects": {
+        "pay_extra": {"money": -100, "happiness": 5, "hunger": 0},
+        "try_to_save": {"money": 0, "happiness": -15, "hunger": 5}
+      }
+    },
+    {
+      "description": "You get a chance to barter skills with a neighbor for some food.",
+      "choices": ["barter", "refuse"],
+      "effects": {
+        "barter": {"money": 0, "hunger": -25, "happiness": 3},
+        "refuse": {"money": 0, "hunger": 5, "happiness": -5}
+      }
+    },
+    {
+      "description": "You can rent a storage locker to declutter your apartment.",
+      "choices": ["rent", "don't_rent"],
+      "effects": {
+        "rent": {"money": -70, "happiness": 5, "hunger": 0},
+        "don't_rent": {"money": 0, "happiness": -5, "hunger": 0}
+      }
+    },
+    {
+      "description": "You find a lost wallet with $60 inside.",
+      "choices": ["keep", "turn_in"],
+      "effects": {
+        "keep": {"money": 60, "happiness": -10, "hunger": 0},
+        "turn_in": {"money": 0, "happiness": 5, "hunger": 0}
+      }
+    },
+    {
+      "description": "A sudden storm causes damage, requiring $80 for repairs.",
+      "choices": ["repair_now", "wait"],
+      "effects": {
+        "repair_now": {"money": -80, "happiness": 2, "hunger": 0},
+        "wait": {"money": 0, "happiness": -10, "hunger": 0}
+      }
+    },
+    {
+      "description": "You can join a community garden to grow some of your own food.",
+      "choices": ["join", "pass"],
+      "effects": {
+        "join": {"money": 0, "hunger": -15, "happiness": 5},
+        "pass": {"money": 0, "hunger": 0, "happiness": 0}
+      }
+    },
+    {
+      "description": "Your phone contract is up; switching providers saves you $20/month.",
+      "choices": ["switch", "stay"],
+      "effects": {
+        "switch": {"money": 0, "happiness": 1, "phone_cost": -20},
+        "stay": {"money": 0, "happiness": -5}
+      }
+    },
+    {
+      "description": "You’re invited to join a gym with a low monthly fee.",
+      "choices": ["join", "decline"],
+      "effects": {
+        "join": {"money": -30, "happiness": 4, "hunger": 0},
+        "decline": {"money": 0, "happiness": -2, "hunger": 0}
+      }
+    },
+    {
+      "description": "A festival offers free food but crowded and noisy.",
+      "choices": ["attend", "skip"],
+      "effects": {
+        "attend": {"money": 0, "hunger": -20, "happiness": 3},
+        "skip": {"money": 0, "hunger": 5, "happiness": 0}
+      }
+    },
+    {
+      "description": "Your friend needs help moving and offers to pay you $40.",
+      "choices": ["help", "refuse"],
+      "effects": {
+        "help": {"money": 40, "happiness": -5, "hunger": 5},
+        "refuse": {"money": 0, "happiness": 5, "hunger": 0}
+      }
+    },
+    {
+      "description": "You discover a side hustle delivering food on weekends.",
+      "choices": ["take_job", "pass"],
+      "effects": {
+        "take_job": {"money": 100, "happiness": -5, "hunger": 10},
+        "pass": {"money": 0, "happiness": 3, "hunger": 0}
+      }
+    },
+    {
+      "description": "You find an old bike in good condition on the curb.",
+      "choices": ["take", "ignore"],
+      "effects": {
+        "take": {"money": 0, "happiness": 3, "hunger": 0},
+        "ignore": {"money": 0, "happiness": 0}
+      }
+    },
+    {
+      "description": "Your fridge breaks and needs $200 to fix or replace.",
+      "choices": ["fix", "wait"],
+      "effects": {
+        "fix": {"money": -200, "happiness": 3, "hunger": 0},
+        "wait": {"money": 0, "hunger": 10, "happiness": -15}
+      }
+    },
+    {
+      "description": "You can sign up for a local cooking class for $50.",
+      "choices": ["sign_up", "skip"],
+      "effects": {
+        "sign_up": {"money": -50, "happiness": 5, "hunger": -10},
+        "skip": {"money": 0, "happiness": 0, "hunger": 0}
+      }
+    },
+    {
+      "description": "You can volunteer at a shelter for free meals.",
+      "choices": ["volunteer", "decline"],
+      "effects": {
+        "volunteer": {"money": 0, "hunger": -25, "happiness": 10},
+        "decline": {"money": 0, "hunger": 5, "happiness": -5}
+      }
+    },
+    {
+      "description": "Your landlord offers a rent discount if you pay 3 months upfront.",
+      "choices": ["pay_upfront", "pay_monthly"],
+      "effects": {
+        "pay_upfront": {"money": -3300, "happiness": 5, "rent_multiplier": 0.85},
+        "pay_monthly": {"money": 0, "happiness": -5}
+      }
+    },
+    {
+      "description": "You find a temporary gig cleaning offices after hours.",
+      "choices": ["take_gig", "decline"],
+      "effects": {
+        "take_gig": {"money": 120, "happiness": -10, "hunger": 10},
+        "decline": {"money": 0, "happiness": 5, "hunger": 0}
+      }
+    },
+    {
+      "description": "You’re invited to a potluck dinner with friends.",
+      "choices": ["attend", "skip"],
+      "effects": {
+        "attend": {"money": -10, "hunger": -15, "happiness": 5},
+        "skip": {"money": 0, "hunger": 10, "happiness": -2}
+      }
+    },
+    {
+      "description": "A co-worker offers to carpool to save gas money.",
+      "choices": ["carpool", "drive_alone"],
+      "effects": {
+        "carpool": {"money": -10, "happiness": 2, "hunger": 0},
+        "drive_alone": {"money": 0, "happiness": 0, "hunger": 0}
+      }
+    },
+    {
+      "description": "You get a chance to sell some old items online.",
+      "choices": ["sell", "keep"],
+      "effects": {
+        "sell": {"money": 80, "happiness": 1},
+        "keep": {"money": 0, "happiness": 0}
+      }
+    },
+    {
+      "description": "You can buy a monthly transit pass at a discount.",
+      "choices": ["buy_pass", "pay_per_ride"],
+      "effects": {
+        "buy_pass": {"money": -75, "happiness": 3, "hunger": 0},
+        "pay_per_ride": {"money": 0, "happiness": 0}
+      }
+    },
+    {
+      "description": "Your friend offers to teach you to cook homemade meals.",
+      "choices": ["learn", "decline"],
+      "effects": {
+        "learn": {"money": 0, "happiness": 4, "hunger": -15},
+        "decline": {"money": 0, "happiness": -1, "hunger": 0}
+      }
+    },
+    {
+      "description": "You find a flyer for a free movie screening nearby.",
+      "choices": ["go", "ignore"],
+      "effects": {
+        "go": {"money": 0, "happiness": 3},
+        "ignore": {"money": 0, "happiness": 0}
+      }
+    },
+    {
+      "description": "You can rent a storage unit to keep extra belongings safe.",
+      "choices": ["rent", "skip"],
+      "effects": {
+        "rent": {"money": -50, "happiness": 2},
+        "skip": {"money": 0, "happiness": -2}
+      }
+    },
+    {
+      "description": "You’re offered a discount on utilities if you install energy-efficient bulbs.",
+      "choices": ["install", "ignore"],
+      "effects": {
+        "install": {"money": -30, "happiness": 3},
+        "ignore": {"money": 0, "happiness": 0}
+      }
+    },
+    {
+      "description": "You have an opportunity to tutor local students for $25/hour.",
+      "choices": ["tutor", "skip"],
+      "effects": {
+        "tutor": {"money": 75, "happiness": -2, "hunger": 5},
+        "skip": {"money": 0, "happiness": 1}
+      }
+    },
+    {
+      "description": "You discover a discount card for a local grocery store.",
+      "choices": ["use_card", "ignore"],
+      "effects": {
+        "use_card": {"money": -20, "hunger": -30, "happiness": 2},
+        "ignore": {"money": 0, "hunger": 0, "happiness": -5}
+      }
+    },
+    {
+      "description": "Your friend invites you to split a monthly meal plan.",
+      "choices": ["join", "decline"],
+      "effects": {
+        "join": {"money": -100, "hunger": -50, "happiness": 3},
+        "decline": {"money": 0, "hunger": 10, "happiness": -5}
+      }
+    },
+    {
+      "description": "You can buy a secondhand laptop for $200 to look for better jobs.",
+      "choices": ["buy", "wait"],
+      "effects": {
+        "buy": {"money": -200, "happiness": 5},
+        "wait": {"money": 0, "happiness": -3}
+      }
+    },
+    {
+      "description": "Your water bill is higher than usual due to a leak.",
+      "choices": ["pay_now", "delay_payment"],
+      "effects": {
+        "pay_now": {"money": -60, "happiness": 1},
+        "delay_payment": {"money": 0, "happiness": -5}
+      }
+    },
+    {
+      "description": "Your landlord increases rent due to rising maintenance costs.",
+        "choices": ["accept", "appeal"],
+        "effects": {
+          "accept": {"money": -200, "happiness": -10, "hunger": 0, "rent_multiplier": 1.1},
+          "appeal": {"money": -50, "happiness": 5, "hunger": 0}
+        }
+      },
+      {
+        "description": "A rent spike hits your neighborhood, forcing higher rent.",
+        "choices": ["pay", "move_out"],
+        "effects": {
+          "pay": {"money": -400, "happiness": -15, "hunger": 0, "rent_multiplier": 1.2},
+          "move_out": {"money": -500, "happiness": 10, "hunger": 5, "rent_multiplier": 1}
+        }
+      },
+      {
+        "description": "The apartment complex renovates the building, increasing rent.",
+        "choices": ["accept", "complain"],
+        "effects": {
+          "accept": {"money": -300, "happiness": -12, "hunger": 0, "rent_multiplier": 1.15},
+          "complain": {"money": 0, "happiness": -16, "hunger": 0}
+        }
+      }
+    ]
+    
+  

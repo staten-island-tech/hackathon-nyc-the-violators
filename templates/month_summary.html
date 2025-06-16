@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Month Summary - Rent or Starve?</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Month Complete!</h1>
+    <p>You finished a month as a {{ state.job }} living in {{ state.apt }}.</p>
+    <p>Money left: ${{ "%.2f"|format(state.money) }}</p>
+    <p>Do you want to continue playing for another month or quit?</p>
+    <form method="POST">
+        <button name="action" value="continue">Continue</button>
+        <button name="action" value="quit">Quit</button>
+    </form>
+</body>
+</html>
